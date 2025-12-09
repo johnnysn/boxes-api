@@ -3,6 +3,7 @@ package com.uriel.boxes.configuration;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.uriel.boxes.data.entity.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.auth0.jwt.JWT;
 
@@ -13,7 +14,8 @@ import java.util.Optional;
 @Component
 public class TokenHandler {
 
-    private String secret = "secret";
+    @Value("${app.security.secret}")
+    private String secret;
 
     public String generateToken(User user) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
