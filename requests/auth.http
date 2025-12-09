@@ -1,0 +1,25 @@
+###
+POST http://localhost:8080/auth/signup
+Content-type: application/json
+
+{
+    "email": "wesley@gmail.com",
+    "password": "teste",
+    "name": "Wesley"
+}
+###
+
+###
+POST http://localhost:8080/auth/signin
+Content-type: application/json
+
+{
+  "email": "wesley@gmail.com",
+  "password": "teste"
+}
+###
+
+###
+GET http://localhost:8080/boxes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInN1YiI6Indlc2xleUBnbWFpbC5jb20iLCJleHAiOjE3NjUyOTUzNTYsImlhdCI6MTc2NTI5NDc1Nn0.aXPVeT5NB2TWm5XPXAXz2ycppDRScW0uKB7QMKHT3wY
+###

@@ -41,3 +41,6 @@ compose.yml
 
 ### Environment ###
 .env
+
+### Generated DDLs ###
+ddl_generated.sql
