@@ -18,4 +18,14 @@ public class BoxService {
     public List<Box> listUserBoxes(User user) {
         return repository.findAllByUser(user, Sort.by("name"));
     }
+
+    public Box create(User loggedInUser, String name, String description) {
+        var box = Box.builder()
+                .name(name)
+                .description(description)
+                .user(loggedInUser)
+                .build();
+
+        return repository.save(box);
+    }
 }

@@ -1,0 +1,1 @@
+ALTER TABLE boxes ADD description VARCHAR(400);

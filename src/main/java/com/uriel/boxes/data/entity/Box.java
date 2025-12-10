@@ -1,13 +1,15 @@
 package com.uriel.boxes.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "boxes")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Box {
 
     @Id
@@ -16,6 +18,9 @@ public class Box {
 
     @Column(length = 100)
     private String name;
+
+    @Column(length = 400)
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
