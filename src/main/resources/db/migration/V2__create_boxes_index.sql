@@ -1,0 +1,1 @@
+CREATE INDEX idx_boxes_user_id_name_lower ON boxes (user_id, lower(name));
