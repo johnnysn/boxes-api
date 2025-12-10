@@ -17,6 +17,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final TokenHandler tokenHandler;
+    private final UserService userService;
 
     public User signup(String email, String password, String name) {
         User user = new User();
@@ -32,6 +33,12 @@ public class AuthService {
         var auth = authenticationManager.authenticate(tokenAuth);
 
         User user = (User) auth.getPrincipal();
+        return tokenHandler.generateToken(user);
+    }
+
+    public String refreshToken() {
+        var user = userService.getLoggedInUser();
+
         return tokenHandler.generateToken(user);
     }
 }
