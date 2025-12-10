@@ -13,4 +13,6 @@ public interface BoxRepository extends JpaRepository<Box, Long> {
 
     List<Box> findAllByUser(User user, Sort sort);
 
+    boolean existsByUserAndId(User user, Long id);
+
 }

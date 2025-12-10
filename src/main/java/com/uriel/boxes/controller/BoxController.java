@@ -7,8 +7,8 @@ import com.uriel.boxes.service.BoxService;
 import com.uriel.boxes.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -39,5 +39,31 @@ public class BoxController {
 
         return ResponseEntity.created(URI.create("/boxes/" + createdBox.getId()))
                 .body(new BoxOutDto(createdBox.getId(), createdBox.getName(), createdBox.getDescription()));
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("@boxPermission.hasPermission(#id)")
+    public BoxOutDto getById(@PathVariable Long id) {
+        Box box =  boxService.getById(id);
+
+        return new BoxOutDto(
+            box.getId(), box.getName(), box.getDescription()
+        );
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("@boxPermission.hasPermission(#id)")
+    public BoxOutDto getById(@PathVariable Long id, @RequestBody @Valid BoxInDto data) {
+        Box boxData =  Box.builder()
+                .name(data.name())
+                .description(data.description())
+                .id(id)
+                .build();
+
+        Box box = boxService.update(boxData);
+
+        return new BoxOutDto(
+                box.getId(), box.getName(), box.getDescription()
+        );
     }
 }
