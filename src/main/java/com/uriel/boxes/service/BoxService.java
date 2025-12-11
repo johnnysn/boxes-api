@@ -5,6 +5,8 @@ import com.uriel.boxes.data.entity.User;
 import com.uriel.boxes.data.repository.BoxRepository;
 import com.uriel.boxes.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,10 @@ public class BoxService {
 
     public List<Box> listUserBoxes(User user) {
         return repository.findAllByUser(user, Sort.by("name"));
+    }
+
+    public Page<Box> findByUser(User user, Pageable pageable) {
+        return repository.findByUser(user, pageable);
     }
 
     public Box create(User loggedInUser, String name, String description) {

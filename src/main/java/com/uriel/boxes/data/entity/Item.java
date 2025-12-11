@@ -1,20 +1,30 @@
 package com.uriel.boxes.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 @Entity
 @Table(name = "items")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
+    @Column(length = 100)
+    @NotBlank(message = "O nome do item não pode ser vazio")
+    private String name;
+
+    @Column(length = 400)
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "box_id")
-    private Box parent;
+    private Box box;
 }

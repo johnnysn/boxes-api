@@ -7,6 +7,8 @@ import com.uriel.boxes.service.BoxService;
 import com.uriel.boxes.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ public class BoxController {
     private final BoxService boxService;
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<BoxOutDto>> getAllMyBoxes() {
         var user = userService.getLoggedInUser();
 
@@ -31,6 +33,14 @@ public class BoxController {
                         .map(b -> new BoxOutDto(b.getId(), b.getName(), b.getDescription()))
                         .toList()
         );
+    }
+
+    @GetMapping()
+    public Page<BoxOutDto> findMyBoxes(Pageable pageable) {
+        var user = userService.getLoggedInUser();
+
+        return boxService.findByUser(user, pageable)
+                .map(o -> new BoxOutDto(o.getId(), o.getName(), o.getDescription()));
     }
 
     @PostMapping

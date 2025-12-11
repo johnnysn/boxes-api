@@ -1,4 +1,4 @@
-package com.uriel.boxes.dto.input.UserInDto;
+package com.uriel.boxes.dto.input;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

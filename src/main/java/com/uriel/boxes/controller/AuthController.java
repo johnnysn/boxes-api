@@ -1,7 +1,7 @@
 package com.uriel.boxes.controller;
 
 import com.uriel.boxes.dto.input.LoginDto;
-import com.uriel.boxes.dto.input.UserInDto.UserInDto;
+import com.uriel.boxes.dto.input.UserInDto;
 import com.uriel.boxes.dto.output.UserOutDto;
 import com.uriel.boxes.service.AuthService;
 import jakarta.validation.Valid;
