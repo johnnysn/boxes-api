@@ -19,6 +19,7 @@ public interface BoxRepository extends JpaRepository<Box, Long> {
     @Query("""
     select b
     from Box b
+    join fetch b.items
     where b.parent is null and b.user = :user
     """)
     Page<Box> findByUser(User user, Pageable pageable);

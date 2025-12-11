@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class Item {
 
     @Id
@@ -24,7 +25,8 @@ public class Item {
     @Column(length = 400)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "box_id")
+    @ToString.Exclude
     private Box box;
 }

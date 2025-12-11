@@ -3,6 +3,8 @@ package com.uriel.boxes.data.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "boxes")
 @Getter
@@ -10,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Box {
 
     @Id
@@ -24,9 +27,16 @@ public class Box {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
+    @ToString.Exclude
     private Box parent;
+
+    @OneToMany(mappedBy = "box", fetch = FetchType.LAZY, orphanRemoval = true)
+    @ToString.Exclude
+    @OrderBy("name")
+    private List<Item> items;
 }

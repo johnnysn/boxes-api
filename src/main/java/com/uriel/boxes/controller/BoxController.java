@@ -3,12 +3,15 @@ package com.uriel.boxes.controller;
 import com.uriel.boxes.data.entity.Box;
 import com.uriel.boxes.dto.input.BoxInDto;
 import com.uriel.boxes.dto.output.BoxOutDto;
+import com.uriel.boxes.dto.output.BoxWithItemsOutDto;
+import com.uriel.boxes.mapper.BoxMapper;
 import com.uriel.boxes.service.BoxService;
 import com.uriel.boxes.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,7 @@ public class BoxController {
 
     private final BoxService boxService;
     private final UserService userService;
+    private final BoxMapper mapper;
 
     @GetMapping("/all")
     public ResponseEntity<List<BoxOutDto>> getAllMyBoxes() {
@@ -35,12 +39,12 @@ public class BoxController {
         );
     }
 
-    @GetMapping()
-    public Page<BoxOutDto> findMyBoxes(Pageable pageable) {
+    @GetMapping
+    public Page<BoxWithItemsOutDto> findMyBoxes(@SortDefault(sort = "name") Pageable pageable) {
         var user = userService.getLoggedInUser();
 
         return boxService.findByUser(user, pageable)
-                .map(o -> new BoxOutDto(o.getId(), o.getName(), o.getDescription()));
+                .map(mapper::entityToDtoWithItems);
     }
 
     @PostMapping
