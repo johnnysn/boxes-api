@@ -5,7 +5,7 @@ import com.uriel.boxes.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("itemPermission")
 @RequiredArgsConstructor
 public class ItemPermission {
 

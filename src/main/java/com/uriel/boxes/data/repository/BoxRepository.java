@@ -5,11 +5,13 @@ import com.uriel.boxes.data.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BoxRepository extends JpaRepository<Box, Long> {
@@ -25,5 +27,9 @@ public interface BoxRepository extends JpaRepository<Box, Long> {
     Page<Box> findByUser(User user, Pageable pageable);
 
     boolean existsByUserAndId(User user, Long id);
+
+    @Override
+    @EntityGraph(attributePaths = {"user"})
+    Optional<Box> findById(Long id);
 
 }
