@@ -6,6 +6,7 @@ import com.uriel.boxes.dto.output.ItemOutDto;
 import com.uriel.boxes.service.ItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class ItemController {
     private final ItemService service;
 
     @PostMapping("/boxes/{boxId}/items")
+    @PreAuthorize("@boxPermission.hasPermission(#boxId)")
     public ItemOutDto create(@PathVariable Long boxId, @RequestBody @Valid ItemInDto data) {
         Item item = service.create(boxId, data.name(), data.description());
 
@@ -24,6 +26,7 @@ public class ItemController {
     }
 
     @GetMapping("/boxes/{boxId}/items")
+    @PreAuthorize("@boxPermission.hasPermission(#boxId)")
     public List<ItemOutDto> getItems(@PathVariable Long boxId) {
         return service.listFromBox(boxId).stream()
                 .map(i -> new ItemOutDto(i.getId(), i.getName(), i.getDescription()))
