@@ -34,6 +34,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/health").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/signin").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/token").permitAll() // refresh token
                         .anyRequest().authenticated() // Qualquer outra rota exige autenticação
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

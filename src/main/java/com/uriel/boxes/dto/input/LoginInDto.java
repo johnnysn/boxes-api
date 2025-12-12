@@ -1,6 +1,6 @@
 package com.uriel.boxes.dto.input;
 
-public record LoginDto(
+public record LoginInDto(
         String email,
         String password
 ) {

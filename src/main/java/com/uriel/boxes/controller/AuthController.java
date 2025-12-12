@@ -1,14 +1,19 @@
 package com.uriel.boxes.controller;
 
-import com.uriel.boxes.dto.input.LoginDto;
+import com.uriel.boxes.dto.input.LoginInDto;
+import com.uriel.boxes.dto.input.RefreshTokenInDto;
 import com.uriel.boxes.dto.input.UserInDto;
+import com.uriel.boxes.dto.output.LoginOutDto;
 import com.uriel.boxes.dto.output.UserOutDto;
-import com.uriel.boxes.service.AuthService;
+import com.uriel.boxes.service.auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
@@ -18,18 +23,14 @@ public class AuthController {
     private final AuthService service;
 
     @PostMapping("/signin")
-    public ResponseEntity<UserOutDto> signin(@RequestBody @Valid LoginDto loginData) {
-        var token = service.signin(loginData.email(), loginData.password());
-
-        return ResponseEntity.ok().body(
-                new UserOutDto(loginData.email(),  token)
-        );
+    public LoginOutDto signin(@RequestBody @Valid LoginInDto loginData) {
+        return service.signin(loginData.email(), loginData.password());
     }
 
-    @GetMapping("/token")
-    public ResponseEntity<String> refreshToken() {
+    @PostMapping("/token")
+    public ResponseEntity<String> refreshToken(@RequestBody @Valid RefreshTokenInDto data) {
         return ResponseEntity.ok().body(
-                service.refreshToken()
+                service.refreshToken(data.token())
         );
     }
 
