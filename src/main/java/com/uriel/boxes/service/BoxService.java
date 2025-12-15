@@ -23,7 +23,7 @@ public class BoxService {
     }
 
     public Page<Box> findByUser(User user, Pageable pageable) {
-        return repository.findByUser(user, pageable);
+        return repository.findByUserId(user.getId(), pageable);
     }
 
     public Box create(User loggedInUser, String name, String description) {

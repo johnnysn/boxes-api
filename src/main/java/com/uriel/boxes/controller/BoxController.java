@@ -43,8 +43,8 @@ public class BoxController {
     public Page<BoxWithItemsOutDto> findMyBoxes(@SortDefault(sort = "name") Pageable pageable) {
         var user = userService.getLoggedInUser();
 
-        return boxService.findByUser(user, pageable)
-                .map(mapper::entityToDtoWithItems);
+        var boxes = boxService.findByUser(user, pageable);
+        return boxes.map(mapper::entityToDtoWithItems);
     }
 
     @PostMapping
