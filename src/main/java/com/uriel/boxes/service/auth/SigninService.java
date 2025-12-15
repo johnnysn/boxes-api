@@ -30,8 +30,10 @@ class SigninService {
         String refreshToken = createRefreshToken(user);
 
         return new LoginOutDto(
-                user.getEmail(), user.getName(),
-                jwt, refreshToken
+                user.getEmail(),
+                user.getName(),
+                jwt,
+                refreshToken
         );
     }
 
