@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class SecurityFilter extends OncePerRequestFilter {
+public class AuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenHandler tokenHandler;
 

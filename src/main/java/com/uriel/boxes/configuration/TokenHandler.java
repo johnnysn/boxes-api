@@ -18,11 +18,16 @@ public class TokenHandler {
     private String secret;
 
     public String generateToken(User user) {
+        return generateToken(user.getId(), user.getEmail(), user.getName());
+    }
+
+    public String generateToken(Long userId, String email, String name) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
 
         return JWT.create()
-                .withClaim("userId", user.getId())
-                .withSubject(user.getEmail())
+                .withClaim("userId", userId)
+                .withSubject(email)
+                .withClaim("name", name)
                 .withExpiresAt(Instant.now().plusSeconds(600))
                 .withIssuedAt(Instant.now())
                 .sign(algorithm);
@@ -33,7 +38,13 @@ public class TokenHandler {
 
         try {
             DecodedJWT jwt = JWT.require(algorithm).build().verify(token);
-            return Optional.of(new JWTUserData(jwt.getClaim("userId").asLong(), jwt.getSubject()));
+            return Optional.of(
+                    new JWTUserData(
+                            jwt.getClaim("userId").asLong(),
+                            jwt.getSubject(),
+                            jwt.getClaim("name").asString()
+                    )
+            );
         } catch (Exception e) {
             return Optional.empty();
         }
