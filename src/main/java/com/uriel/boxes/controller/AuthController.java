@@ -35,8 +35,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserOutDto> signup(@RequestBody UserInDto data) {
-        var user = service.signup(data.email(), data.password(),  data.name());
+    public ResponseEntity<UserOutDto> signup(@RequestBody @Valid UserInDto data) {
+        var user = service.signup(data.email(), data.password(),  data.name(), data.invitationCode());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new UserOutDto(
