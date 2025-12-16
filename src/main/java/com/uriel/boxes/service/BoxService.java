@@ -26,11 +26,12 @@ public class BoxService {
         return repository.findByUserId(user.getId(), pageable);
     }
 
-    public Box create(User loggedInUser, String name, String description) {
+    public Box create(User loggedInUser, String name, String description, Box.Color color) {
         var box = Box.builder()
                 .name(name)
                 .description(description)
                 .user(loggedInUser)
+                .color(color)
                 .build();
 
         return repository.save(box);
@@ -47,6 +48,7 @@ public class BoxService {
 
         savedBox.setName(boxData.getName());
         savedBox.setDescription(boxData.getDescription());
+        savedBox.setColor(boxData.getColor());
 
         return repository.save(savedBox);
     }

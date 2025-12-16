@@ -1,0 +1,2 @@
+ALTER TABLE boxes
+    ADD COLUMN color VARCHAR(20);

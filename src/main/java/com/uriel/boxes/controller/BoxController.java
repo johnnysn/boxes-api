@@ -34,7 +34,7 @@ public class BoxController {
 
         return ResponseEntity.ok(
                 boxService.listUserBoxes(user).stream()
-                        .map(b -> new BoxOutDto(b.getId(), b.getName(), b.getDescription()))
+                        .map(mapper::entityToDto)
                         .toList()
         );
     }
@@ -49,10 +49,10 @@ public class BoxController {
 
     @PostMapping
     public ResponseEntity<BoxOutDto> create(@RequestBody @Valid BoxInDto data) {
-        Box createdBox = boxService.create(userService.getLoggedInUser(), data.name(), data.description());
+        Box createdBox = boxService.create(userService.getLoggedInUser(), data.name(), data.description(), data.color());
 
         return ResponseEntity.created(URI.create("/boxes/" + createdBox.getId()))
-                .body(new BoxOutDto(createdBox.getId(), createdBox.getName(), createdBox.getDescription()));
+                .body(mapper.entityToDto(createdBox));
     }
 
     @GetMapping("/{id}")
@@ -61,7 +61,7 @@ public class BoxController {
         Box box =  boxService.getById(id);
 
         return new BoxOutDto(
-            box.getId(), box.getName(), box.getDescription()
+            box.getId(), box.getName(), box.getDescription(), box.getColor()
         );
     }
 
@@ -72,12 +72,11 @@ public class BoxController {
                 .name(data.name())
                 .description(data.description())
                 .id(id)
+                .color(data.color())
                 .build();
 
         Box box = boxService.update(boxData);
 
-        return new BoxOutDto(
-                box.getId(), box.getName(), box.getDescription()
-        );
+        return mapper.entityToDto(box);
     }
 }

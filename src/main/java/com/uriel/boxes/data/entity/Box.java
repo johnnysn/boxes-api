@@ -39,4 +39,12 @@ public class Box {
     @ToString.Exclude
     @OrderBy("name")
     private List<Item> items;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private Color color;
+
+    public enum Color {
+        RED, BLUE, EMERALD, YELLOW, ORANGE, BROWN, GRAY
+    }
 }
