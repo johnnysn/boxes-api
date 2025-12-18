@@ -52,4 +52,8 @@ public class BoxService {
 
         return repository.save(savedBox);
     }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }

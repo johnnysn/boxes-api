@@ -79,4 +79,11 @@ public class BoxController {
 
         return mapper.entityToDto(box);
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@boxPermission.hasPermission(#id)")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        boxService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
