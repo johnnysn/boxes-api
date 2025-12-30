@@ -1,11 +1,12 @@
 package com.uriel.boxes.controller;
 
+import com.uriel.boxes.controller.search.BoxSearchParams;
 import com.uriel.boxes.data.entity.Box;
 import com.uriel.boxes.dto.input.BoxInDto;
 import com.uriel.boxes.dto.output.BoxOutDto;
 import com.uriel.boxes.dto.output.BoxWithItemsOutDto;
 import com.uriel.boxes.mapper.BoxMapper;
-import com.uriel.boxes.service.BoxService;
+import com.uriel.boxes.service.box.BoxService;
 import com.uriel.boxes.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,10 +41,11 @@ public class BoxController {
     }
 
     @GetMapping
-    public Page<BoxWithItemsOutDto> findMyBoxes(@SortDefault(sort = "name") Pageable pageable) {
+    public Page<BoxWithItemsOutDto> findMyBoxes(@SortDefault(sort = "name") Pageable pageable, BoxSearchParams params) {
         var user = userService.getLoggedInUser();
 
-        var boxes = boxService.findByUser(user, pageable);
+        params.setUserId(user.getId());
+        var boxes = boxService.search(params, pageable);
         return boxes.map(mapper::entityToDtoWithItems);
     }
 

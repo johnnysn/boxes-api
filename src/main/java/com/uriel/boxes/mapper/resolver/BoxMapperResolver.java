@@ -1,7 +1,7 @@
 package com.uriel.boxes.mapper.resolver;
 
 import com.uriel.boxes.data.entity.Box;
-import com.uriel.boxes.service.BoxService;
+import com.uriel.boxes.service.box.BoxService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

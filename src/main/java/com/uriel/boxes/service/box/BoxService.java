@@ -1,5 +1,6 @@
-package com.uriel.boxes.service;
+package com.uriel.boxes.service.box;
 
+import com.uriel.boxes.controller.search.BoxSearchParams;
 import com.uriel.boxes.data.entity.Box;
 import com.uriel.boxes.data.entity.User;
 import com.uriel.boxes.data.repository.BoxRepository;
@@ -17,6 +18,7 @@ import java.util.List;
 public class BoxService {
 
     private final BoxRepository repository;
+    private final BoxSearchService boxSearchService;
 
     public List<Box> listUserBoxes(User user) {
         return repository.findAllByUser(user, Sort.by("name"));
@@ -24,6 +26,10 @@ public class BoxService {
 
     public Page<Box> findByUser(User user, Pageable pageable) {
         return repository.findByUserId(user.getId(), pageable);
+    }
+
+    public Page<Box> search(BoxSearchParams params, Pageable pageable) {
+        return boxSearchService.execute(params, pageable);
     }
 
     public Box create(User loggedInUser, String name, String description, Box.Color color) {
