@@ -15,8 +15,8 @@ public class AuthService {
     private final SigninService signinService;
     private final RefreshTokenService refreshTokenService;
 
-    public User signup(String email, String password, String name, String invitationCode) {
-        return signupService.execute(email, password, name, invitationCode);
+    public User signup(String email, String password, String name, String invitationCode, String encryptionSalt) {
+        return signupService.execute(email, password, name, invitationCode, encryptionSalt);
     }
 
     public LoginOutDto signin(String email, String password) {

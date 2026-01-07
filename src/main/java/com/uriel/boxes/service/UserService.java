@@ -14,6 +14,14 @@ public class UserService {
 
     private final UserRepository repository;
 
+    public User getById(long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+    }
+
+    public User getByEmail(String email) {
+        return repository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+    }
+
     public User getLoggedInUser() {
         var userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

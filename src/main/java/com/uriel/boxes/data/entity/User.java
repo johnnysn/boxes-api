@@ -24,6 +24,9 @@ public class User implements UserDetails {
 
     private String name;
 
+    @Column(nullable = false)
+    private String encryptionSalt;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

@@ -16,13 +16,14 @@ class SignupService {
     private final InvitationCodeRepository invitationCodeRepository;
     private final PasswordEncoder passwordEncoder;
 
-    User execute(String email, String password, String name, String invitationCode) {
+    User execute(String email, String password, String name, String invitationCode, String encryptionSalt) {
         checkExisting(email);
         checkInvitationCode(email, invitationCode);
 
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
+        user.setEncryptionSalt(encryptionSalt);
         user.setName(name);
 
         return userRepository.save(user);

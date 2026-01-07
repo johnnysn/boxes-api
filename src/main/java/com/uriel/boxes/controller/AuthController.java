@@ -35,7 +35,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<UserOutDto> signup(@RequestBody @Valid UserInDto data) {
-        var user = service.signup(data.email(), data.password(),  data.name(), data.invitationCode());
+        var user = service.signup(data.email(), data.password(),  data.name(), data.invitationCode(), data.encryptionSalt());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new UserOutDto(
@@ -53,6 +53,13 @@ public class AuthController {
                 user.getEmail(),
                 user.getName()
         );
+    }
+
+    @GetMapping("/salt")
+    public String getSalt(@RequestParam String email) {
+        var user = userService.getByEmail(email);
+
+        return user.getEncryptionSalt();
     }
 
 }

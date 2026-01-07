@@ -1,0 +1,2 @@
+ALTER TABLE users
+    ADD COLUMN encryption_salt VARCHAR(24) DEFAULT '00&c9' NOT NULL;
