@@ -25,6 +25,9 @@ public class Item {
     @Column(length = 400)
     private String description;
 
+    @Column(length = 24)
+    private String iv;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "box_id")
     @ToString.Exclude

@@ -18,7 +18,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final BoxRepository boxRepository;
 
-    public Item create(Long boxId, String name, String description) {
+    public Item create(Long boxId, String name, String description, String iv) {
         var box = boxRepository.findById(boxId).orElseThrow(
                 () -> new ResourceNotFoundException("Box não encontrada!")
         );
@@ -27,6 +27,7 @@ public class ItemService {
                 .name(name)
                 .description(description)
                 .box(box)
+                .iv(iv)
                 .build();
         return itemRepository.save(item);
     }
@@ -55,6 +56,7 @@ public class ItemService {
 
         saved.setName(item.getName());
         saved.setDescription(item.getDescription());
+        saved.setIv(item.getIv());
 
         return itemRepository.save(saved);
     }

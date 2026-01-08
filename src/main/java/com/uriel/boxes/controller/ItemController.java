@@ -25,9 +25,9 @@ public class ItemController {
     @PostMapping("/boxes/{boxId}/items")
     @PreAuthorize("@boxPermission.hasPermission(#boxId)")
     public ResponseEntity<ItemOutDto> create(@PathVariable Long boxId, @RequestBody @Valid ItemInDto data) {
-        Item item = service.create(boxId, data.name(), data.description());
+        Item item = service.create(boxId, data.name(), data.description(), data.iv());
 
-        var output = new ItemOutDto(item.getId(), item.getName(), item.getDescription());
+        var output = new ItemOutDto(item.getId(), item.getName(), item.getDescription(), item.getIv());
         return ResponseEntity.created(URI.create("/items/" + item.getId())).body(output);
     }
 
@@ -35,7 +35,7 @@ public class ItemController {
     @PreAuthorize("@boxPermission.hasPermission(#boxId)")
     public List<ItemOutDto> getItems(@PathVariable Long boxId) {
         return service.listFromBox(boxId).stream()
-                .map(i -> new ItemOutDto(i.getId(), i.getName(), i.getDescription()))
+                .map(i -> new ItemOutDto(i.getId(), i.getName(), i.getDescription(), i.getIv()))
                 .toList();
     }
 

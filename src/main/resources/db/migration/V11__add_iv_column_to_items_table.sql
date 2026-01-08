@@ -1,0 +1,1 @@
+alter table items add iv varchar(24);
