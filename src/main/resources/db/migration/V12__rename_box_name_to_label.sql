@@ -1,0 +1,1 @@
+alter table boxes rename column name to label;

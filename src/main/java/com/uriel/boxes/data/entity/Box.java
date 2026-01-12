@@ -20,7 +20,7 @@ public class Box {
     private Long id;
 
     @Column(length = 100)
-    private String name;
+    private String label;
 
     @Column(length = 400)
     private String description;

@@ -27,7 +27,7 @@ public class TokenHandler {
         return JWT.create()
                 .withClaim("userId", userId)
                 .withSubject(email)
-                .withClaim("name", name)
+                .withClaim("label", name)
                 .withExpiresAt(Instant.now().plusSeconds(600))
                 .withIssuedAt(Instant.now())
                 .sign(algorithm);
@@ -42,7 +42,7 @@ public class TokenHandler {
                     new JWTUserData(
                             jwt.getClaim("userId").asLong(),
                             jwt.getSubject(),
-                            jwt.getClaim("name").asString()
+                            jwt.getClaim("label").asString()
                     )
             );
         } catch (Exception e) {

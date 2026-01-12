@@ -6,7 +6,7 @@ import java.util.List;
 
 public record BoxWithItemsOutDto(
         Long id,
-        String name,
+        String label,
         String description,
         Box.Color color,
         List<ItemOutDto> items

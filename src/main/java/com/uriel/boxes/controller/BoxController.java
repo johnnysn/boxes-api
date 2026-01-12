@@ -41,7 +41,7 @@ public class BoxController {
     }
 
     @GetMapping
-    public Page<BoxWithItemsOutDto> findMyBoxes(@SortDefault(sort = "name") Pageable pageable, BoxSearchParams params) {
+    public Page<BoxWithItemsOutDto> findMyBoxes(@SortDefault(sort = "label") Pageable pageable, BoxSearchParams params) {
         var user = userService.getLoggedInUser();
 
         params.setUserId(user.getId());
@@ -51,7 +51,7 @@ public class BoxController {
 
     @PostMapping
     public ResponseEntity<BoxOutDto> create(@RequestBody @Valid BoxInDto data) {
-        Box createdBox = boxService.create(userService.getLoggedInUser(), data.name(), data.description(), data.color());
+        Box createdBox = boxService.create(userService.getLoggedInUser(), data.label(), data.description(), data.color());
 
         return ResponseEntity.created(URI.create("/boxes/" + createdBox.getId()))
                 .body(mapper.entityToDto(createdBox));
@@ -63,7 +63,7 @@ public class BoxController {
         Box box =  boxService.getById(id);
 
         return new BoxOutDto(
-            box.getId(), box.getName(), box.getDescription(), box.getColor()
+            box.getId(), box.getLabel(), box.getDescription(), box.getColor()
         );
     }
 
@@ -71,7 +71,7 @@ public class BoxController {
     @PreAuthorize("@boxPermission.hasPermission(#id)")
     public BoxOutDto getById(@PathVariable Long id, @RequestBody @Valid BoxInDto data) {
         Box boxData =  Box.builder()
-                .name(data.name())
+                .label(data.label())
                 .description(data.description())
                 .id(id)
                 .color(data.color())

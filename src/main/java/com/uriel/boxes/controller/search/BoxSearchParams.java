@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BoxSearchParams {
-    private String name;
+    private String label;
     private String description;
     private Boolean or;
     private Long userId;

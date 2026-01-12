@@ -71,10 +71,10 @@ class BoxSearchService {
             predicates.add(cb.equal(joinUser.get("id"), params.getUserId()));
         }
 
-        if (!Strings.isBlank(params.getName())) {
+        if (!Strings.isBlank(params.getLabel())) {
             textPredicates.add(cb.like(
-                    cb.lower(root.get("name")),
-                    "%" + params.getName().trim().toLowerCase() + "%"
+                    cb.lower(root.get("label")),
+                    "%" + params.getLabel().trim().toLowerCase() + "%"
             ));
         }
 

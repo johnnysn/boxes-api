@@ -21,7 +21,7 @@ public class BoxService {
     private final BoxSearchService boxSearchService;
 
     public List<Box> listUserBoxes(User user) {
-        return repository.findAllByUser(user, Sort.by("name"));
+        return repository.findAllByUser(user, Sort.by("label"));
     }
 
     public Page<Box> findByUser(User user, Pageable pageable) {
@@ -32,9 +32,9 @@ public class BoxService {
         return boxSearchService.execute(params, pageable);
     }
 
-    public Box create(User loggedInUser, String name, String description, Box.Color color) {
+    public Box create(User loggedInUser, String label, String description, Box.Color color) {
         var box = Box.builder()
-                .name(name)
+                .label(label)
                 .description(description)
                 .user(loggedInUser)
                 .color(color)
@@ -52,7 +52,7 @@ public class BoxService {
     public Box update(Box boxData) {
         var savedBox = getById(boxData.getId());
 
-        savedBox.setName(boxData.getName());
+        savedBox.setLabel(boxData.getLabel());
         savedBox.setDescription(boxData.getDescription());
         savedBox.setColor(boxData.getColor());
 

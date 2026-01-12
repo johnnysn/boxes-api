@@ -33,7 +33,7 @@ public class ItemService {
     }
 
     public List<Item> listFromBox(Long boxId) {
-        return itemRepository.findByBoxId(boxId, Sort.by("name"));
+        return itemRepository.findByBoxId(boxId, Sort.by("label"));
     }
 
     public void delete(Long id) {
