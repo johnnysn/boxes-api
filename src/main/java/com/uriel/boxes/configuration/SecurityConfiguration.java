@@ -51,7 +51,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/health").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/signin").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/auth/salt").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/salt").permitAll() // Endpoint público para obter o salt
                         .requestMatchers(HttpMethod.POST, "/auth/token").permitAll() // refresh token
                         .anyRequest().authenticated() // Qualquer outra rota exige autenticação
                 )
